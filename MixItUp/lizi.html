@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="gb2312">
+		<title>MixItUp过滤排序jQuery插件 - www.sitejs.cn</title>
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/layout.css">
+
+		<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>a
+	<![endif]-->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easing.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mixitup.min.js"></script>
+
+		
+		<style type="text/css">
+			.portfolio {
+				display: inline-block;
+				margin: 10px;
+				width: 294px;
+				height: 150px;
+			}
+
+			.app {
+				background: red;
+			}
+
+			.card {
+				background: #218838;
+			}
+
+			.icon {
+				background: #00BBBB;
+			}
+
+			.logo {
+				background: #C09853;
+			}
+
+			.web {
+				background: #E83E8C;
+			}
+		</style>
+
+	</head>
+	<body>
+
+		<div class="container">
+
+			<ul id="filters" class="clearfix">
+				<li><span class="filter active" data-filter="app card icon logo web">All</span></li>
+				<li><span class="filter" data-filter="app">App</span></li>
+				<li><span class="filter" data-filter="card">Card</span></li>
+				<li><span class="filter" data-filter="icon">Icon</span></li>
+				<li><span class="filter" data-filter="logo">Logo</span></li>
+				<li><span class="filter" data-filter="web">Web</span></li>
+			</ul>
+
+			<div id="portfoliolist">
+				<div class="portfolio logo" data-cat="logo"></div>
+				<div class="portfolio app" data-cat="app"></div>
+				<div class="portfolio web" data-cat="web"></div>
+				<div class="portfolio card" data-cat="card"></div>
+				<div class="portfolio app" data-cat="app"></div>
+				<div class="portfolio card" data-cat="card"></div>
+				<div class="portfolio card" data-cat="card"></div>
+				<div class="portfolio logo" data-cat="logo"></div>
+				<div class="portfolio app" data-cat="app"></div>
+				<div class="portfolio card" data-cat="card"></div>
+				<div class="portfolio logo" data-cat="logo"></div>
+				<div class="portfolio logo" data-cat="logo"></div>
+				<div class="portfolio icon" data-cat="icon"></div>
+				<div class="portfolio web" data-cat="web"></div>
+				<div class="portfolio web" data-cat="web"></div>
+			</div><!-- container -->
+			
+			
+			
+				<script type="text/javascript">
+							$(function() {
+				
+								var filterList = {
+				
+									init: function() {
+				
+										// MixItUp plugin
+										$('#portfoliolist').mixitup({
+											targetSelector: '.portfolio',
+											filterSelector: '.filter',
+											effects: ['fade'],
+											easing: 'snap',
+											// call the hover effect
+											onMixEnd: filterList.hoverEffect()
+										});
+				
+									},
+				
+									hoverEffect: function() {
+				
+										// Simple parallax effect
+										$('#portfoliolist .portfolio').hover(
+											
+										);
+				
+									}
+				
+								};
+				
+								// Run the show!
+								filterList.init();
+				
+				
+							});
+						</script>
+	</body>
+</html>

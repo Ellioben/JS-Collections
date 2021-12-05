@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="css/layout.css"/>
+		<link rel="stylesheet" type="text/css" href="css/normalize.css"/>
+		<!-- mixitup -->
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.easing.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.mixitup.min(2).js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.product{
+				display: inline-block;
+				margin: 10px;
+				width: 294px;
+				height: 150px;
+			}
+			.App{
+				background:red ;
+			}
+			.Card{
+				background: #218838;
+			}
+			.Icon{
+				background: #00BBBB;
+			}
+			.Logo{
+				background: #C09853;
+			}
+			.Web{
+				background: #E83E8C;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+				<ul id="filters" class="clearfix">
+					<li><span class="filter active" data-filter="App Card Icon Logo Web">All</span></li>
+					<li><span class="filter" data-filter="App">App</span></li>
+					<li><span class="filter" data-filter="Card">Card</span></li>
+					<li><span class="filter" data-filter="Icon">Icon</span></li>
+					<li><span class="filter" data-filter="Logo">Logo</span></li>
+					<li><span class="filter" data-filter="Web">Web</span></li>
+				</ul>
+				<div class="cases" id="cases">
+						<div class="product App">App</div>
+						<div class="product Card">Card</div>
+						<div class="product Icon"> Icon</div>
+						<div class="product Logo"> Logo</div>
+						<div class="product Web"> Web</div>
+						<div class="product Logo"> Logo</div>
+						<div class="product Web"> Web</div>
+						<div class="product Card">Card</div>
+						<div class="product App"> App</div>
+						<div class="product Logo"> Logo</div>
+						<div class="product Icon"> Icon</div>
+						<div class="product Web"> Web</div>
+						<div class="product App"> App</div>
+						<div class="product Web"> Web</div>
+						<div class="product Icon">Icon</div>
+						<div class="product Logo"> Logo</div>
+				</div>
+				
+		<script type="text/javascript">
+			$(function() {
+					$('#cases').mixItUp({
+					  animation: {
+						effects: 'fade scale(0.9) translateY(50px)'
+					  }
+					});
+				});	
+		</script>
+	</body>
+</html>
