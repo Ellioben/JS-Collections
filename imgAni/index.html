@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原生Javascript播放图片序列帧动画</title>
+</head>
+<body>
+
+    <style>
+        .box{text-align: center;}
+        .box>*{display: inline-block;}
+        .hv-image-play{background-size: 100%;}
+    </style>原生Javascript播放图片序列帧动画
+
+<h2 style="text-align: center;">
+    示例 (把鼠标移动到图标上面)
+</h2><style>.box{text-align: center;}
+        .box>*{display: inline-block;}
+        .hv-image-play{background-size: 100%;}</style>
+<div class="box" style="margin-top:2rem;">
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url("img/611e2b5a64b8b.png"); background-position-y: 0px;" keyframes="img/611e2b5a64b8b.png"></div>
+    <div class="hv-image-play" keyframes="img/611e2b5abc79e.png" style="width: 64px; height: 64px; background-image: url(img/611e2b5abc79e.png&quot;); background-position-y: 0px;"></div>
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url(img/611e2b5ae2a28.png&quot;); background-position-y: 0px;" keyframes="img/611e2b5ae2a28.png"></div>
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url(img/611e2b5b36ac3.png&quot;); background-position-y: 0px;" keyframes="img/611e2b5b36ac3.png"></div>
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url(img/611e2b5b5d4ca.png&quot;); background-position-y: 0px;" keyframes="img/611e2b5b5d4ca.png"></div>
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url(img/611e2b5ba3ad6.png&quot;); background-position-y: 0px;" keyframes="img/611e2b5ba3ad6.png"></div>
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url(img/611e2b5beb259.png&quot;); background-position-y: 0px;" keyframes="img/611e2b5beb259.png"></div>
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url(img/611e2b5c45562.png&quot;); background-position-y: 0px;" keyframes="img/611e2b5c45562.png"></div>
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url(img/611e2b5c8fcd2.png&quot;); background-position-y: 0px;" keyframes="img/611e2b5c8fcd2.png"></div>
+    <div class="hv-image-play" style="width: 64px; height: 64px; background-image: url(img/611e2b5cd2cbb.png&quot;); background-position-y: 0px;" keyframes="img/611e2b5cd2cbb.png"></div>
+    <div style="text-align: center;font-size:12px;">
+        <div class="hv-image-play" id="uu" fps="8" loop="true" autoplay="" style="display: inline-block; width: 64px; height: 64px; background-size: 400%; background-position: -192px -260px; background-image: url(img/b6f871ca49767cf719ab44cd232d52e9.jpg&quot;);" keyframes="img/b6f871ca49767cf719ab44cd232d52e9.jpg"></div><br>
+点击可以换姿势
+    </div>
+</div>
+
+
+
+    <script>
+
+        (function(){
+            function _playAni(opts,noloop){
+                var reverse = opts.reverse;
+                var isX = opts.x;
+                var el = opts.el;
+                opts.index = opts.index || 0;
+                clearTimeout(opts.timer);
+                var fps = opts.fps || 40;
+                var speed = 1000 / parseFloat(fps);
+
+
+                function _play(){
+                    var offsetY =  isX ? 0 : 0 - opts.index * opts.step;
+                    var offsetX = isX ? 0 - opts.index * opts.step : 0;
+                    if(isX){
+                        el.style.backgroundPositionX = offsetX + 'px ';
+                    }else{
+                        
+                        el.style.backgroundPositionY = offsetY + 'px ';
+                    }
+
+                    if( (opts.index < opts.count - (opts.loop?0:1)  && !reverse) ||  (opts.index > 0 && reverse ) ){
+                        
+                        opts.index = opts.index + (reverse ? -1 : 1) ;
+                        opts.timer = setTimeout(_play, speed);
+                    }else{
+                        if(opts.loop === true && !noloop){
+                            opts.index = 0;
+                            _playAni(opts)
+                        }
+                        opts.reverse = false;
+                    }
+                }
+
+                _play();
+            }
+
+            function _setTrigger(opts){
+                if(!opts.autoplay){
+                    opts.el.addEventListener('mouseover',function(){
+                        opts.index = 0;
+                        _playAni(opts);
+                    });
+                    opts.el.addEventListener('mouseout',function(){
+                        opts.reverse = true;
+                        _playAni(opts,true);
+                    });
+                }else{
+                    _playAni(opts);
+                }
+            }
+
+
+            [].forEach.call(document.querySelectorAll('[keyframes]'), function(item){
+                var src = item.getAttribute('keyframes');
+                item.style.backgroundImage = 'url('+ src +')';
+                var tmpImage = new Image();
+                tmpImage.src = src;
+                var boxWidth = item.offsetWidth;
+                var boxHeight = item.offsetHeight;
+                var fps = item.getAttribute('fps') || 40;
+                var loop = item.getAttribute('loop')!=undefined && item.getAttribute('loop') != 'false' ? true : false;
+                var mode = item.getAttribute('mode');
+                var autoplay = item.getAttribute('autoplay')!=undefined && item.getAttribute('autoplay') != 'false' ? true : false;
+
+                (function(){
+                    tmpImage.onload = function(){ //图片加载完时
+                        var imgWidth = this.naturalWidth;
+                        var imgHeight = this.naturalHeight;
+                        var bgSize = getComputedStyle(item).backgroundSize.split(' ');
+                        var step = boxHeight;//每帧移动多少像素;
+                        var count = 1;
+                        var opts = {
+                            el:item,
+                            loop:loop,
+                            fps:fps,
+                            autoplay:autoplay,
+                            count:1,
+                        };
+
+                        var bgWidth = bgSize[0] ? bgSize[0].replace('px','') : '' || '';
+                        var bgHeight = bgSize[1] ? bgSize[1].replace('px','') : '' || '';
+
+                        if(bgWidth == '100%' || bgWidth==boxWidth){ //纵向一列
+                            opts.step = boxHeight;
+                            opts.count = boxWidth / imgWidth * imgHeight / boxHeight;
+                        }else
+                        if(bgHeight == '100%' || bgHeight==boxHeight){//横向一行
+                            opts.step = boxWidth;
+                            opts.x = true;
+                            opts.count = boxHeight / imgHeight * imgWidth / boxWidth;
+                        }else
+                        if(bgWidth.indexOf('%')>-1 && bgWidth.replace('%','') != "100" || parseInt(bgWidth) > boxWidth ){
+                            opts.step = boxWidth;
+                            opts.x = true;
+                            opts.count = parseInt(bgWidth.replace('%','')) / 100;
+                        }else
+                        if(bgHeight != undefined && bgHeight.indexOf('%')>-1 && bgHeight.replace('%','') != "100" || parseInt(bgHeight) > boxHeight){
+                            opts.step = boxHeight;
+                            opts.count = parseInt(bgHeight.replace('%','')) / 100;
+                        }
+
+                        _setTrigger(opts);
+                    }
+                })(item,fps,loop,mode,autoplay);
+            })
+        })();
+        
+
+        var ii = 1;
+        document.querySelector('#uu').addEventListener('click',function(){
+            this.style.backgroundPositionY = (-65*ii)+'px';
+            if(ii > 3){ii=0;}
+            ii ++;
+        });
+    </script>
+    
+
+</body>
+</html>
